@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="main.js"></script>
+    <script src="lodash.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function game() {
+            var scoreboard = [0, 0, 0];
+
+            while ((scoreboard[1] + scoreboard[2]) <= 5) {
+                computerPlay(scoreboard);
+            }
+
+            var maximum = _.max(scoreboard);
+            console.log("Winner: " + scoreboard.indexOf(maximum) == 1 ? "Player" : "Computer");
+        }
+
+        function computerPlay(scoreboard) {
+            // take input from player
+            var playerSelection = window.prompt("Choose option: Rock / Paper / Scissors ");
+            // covnert input to lowercase
+            playerSelection = playerSelection.toLowerCase();
+            // store option player
+            // take input from computer
+            // genereate random value
+            var options = ['rock', 'paper', 'scissors'];
+            var computerSelection = _.sample(options).toLowerCase();
+            // convert random value to R/P/S
+            // store option computer
+
+            //console.log(playerSelection, computerSelection);
+            if (playerSelection == computerSelection) {
+                console.log("Tie");
+            } else if (playerSelection == 'rock' & computerSelection == 'paper') {
+                scoreboard[2] += 1;
+                console.log('You Lose! ' +
+                    _.startCase(computerSelection) +
+                    ' beats ' +
+                    _.startCase(playerSelection))
+            } else if (playerSelection == 'scissors' & computerSelection == 'rock') {
+                scoreboard[2] += 1;
+                console.log('You Lose! ' +
+                    _.startCase(computerSelection) +
+                    ' beats ' +
+                    _.startCase(playerSelection))
+            } else if (playerSelection == 'paper' & computerSelection == 'scissors') {
+                scoreboard[2] += 1;
+                console.log('You Lose! ' +
+                        _.startCase(computerSelection) +
+                        ' beats ' +
+                        _.startCase(playerSelection))
+                    // player
+            } else if (playerSelection == 'paper' & computerSelection == 'rock') {
+                scoreboard[1] += 1;
+                console.log('You Win! ' +
+                    _.startCase(playerSelection) +
+                    ' beats ' +
+                    _.startCase(computerSelection))
+            } else if (playerSelection == 'rock' & computerSelection == 'scissors') {
+                scoreboard[1] += 1;
+                console.log('You Win! ' +
+                    _.startCase(playerSelection) +
+                    ' beats ' +
+                    _.startCase(computerSelection))
+            } else if (playerSelection == 'scissors' & computerSelection == 'paper') {
+                scoreboard[1] += 1;
+                console.log('You Win! ' +
+                    _.startCase(playerSelection) +
+                    ' beats ' +
+                    _.startCase(computerSelection))
+            } else {
+                return 0;
+            }
+            // compare player - computer
+            // print winner statement {option} beats {option}
+        }
+
+        game();
+    </script>
+</body>
+
+</html>
