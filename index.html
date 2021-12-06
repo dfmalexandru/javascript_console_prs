@@ -11,80 +11,104 @@
 </head>
 
 <body>
-    <script>
-        function game() {
-            var scoreboard = [0, 0, 0];
 
-            while ((scoreboard[1] + scoreboard[2]) <= 5) {
-                computerPlay(scoreboard);
-            }
+    <h2>Rock / Paper / Scissors</h2>
+    <p>Choose option: Rock / Paper / Scissors </p>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
 
-            var maximum = _.max(scoreboard);
-            console.log("Winner: " + scoreboard.indexOf(maximum) == 1 ? "Player" : "Computer");
-        }
+    <h4>Score</h4>
+    <div style="display:flex;">
+        <div id="player" style="padding-right: 12px;">0</div> -
+        <div id="computer" style="padding-left: 12px;">0</div>
+    </div>
+    <div id="winner"></div>
 
-        function computerPlay(scoreboard) {
-            // take input from player
-            var playerSelection = window.prompt("Choose option: Rock / Paper / Scissors ");
-            // covnert input to lowercase
-            playerSelection = playerSelection.toLowerCase();
-            // store option player
-            // take input from computer
-            // genereate random value
-            var options = ['rock', 'paper', 'scissors'];
-            var computerSelection = _.sample(options).toLowerCase();
-            // convert random value to R/P/S
-            // store option computer
 
-            //console.log(playerSelection, computerSelection);
-            if (playerSelection == computerSelection) {
-                console.log("Tie");
-            } else if (playerSelection == 'rock' & computerSelection == 'paper') {
-                scoreboard[2] += 1;
-                console.log('You Lose! ' +
-                    _.startCase(computerSelection) +
-                    ' beats ' +
-                    _.startCase(playerSelection))
-            } else if (playerSelection == 'scissors' & computerSelection == 'rock') {
-                scoreboard[2] += 1;
-                console.log('You Lose! ' +
-                    _.startCase(computerSelection) +
-                    ' beats ' +
-                    _.startCase(playerSelection))
-            } else if (playerSelection == 'paper' & computerSelection == 'scissors') {
-                scoreboard[2] += 1;
-                console.log('You Lose! ' +
-                        _.startCase(computerSelection) +
-                        ' beats ' +
-                        _.startCase(playerSelection))
-                    // player
-            } else if (playerSelection == 'paper' & computerSelection == 'rock') {
-                scoreboard[1] += 1;
-                console.log('You Win! ' +
-                    _.startCase(playerSelection) +
-                    ' beats ' +
-                    _.startCase(computerSelection))
-            } else if (playerSelection == 'rock' & computerSelection == 'scissors') {
-                scoreboard[1] += 1;
-                console.log('You Win! ' +
-                    _.startCase(playerSelection) +
-                    ' beats ' +
-                    _.startCase(computerSelection))
-            } else if (playerSelection == 'scissors' & computerSelection == 'paper') {
-                scoreboard[1] += 1;
-                console.log('You Win! ' +
-                    _.startCase(playerSelection) +
-                    ' beats ' +
-                    _.startCase(computerSelection))
-            } else {
-                return 0;
-            }
-            // compare player - computer
-            // print winner statement {option} beats {option}
-        }
-
-        game();
-    </script>
 </body>
+<script>
+    // buttons event listener
+    const rock = document.getElementById("rock");
+    const paper = document.getElementById("paper");
+    const scissors = document.getElementById("scissors");
+
+    var playerScore = document.getElementById('player');
+    var computerScore = document.getElementById('computer');
+    var winnerStatus = document.getElementById('winner');
+
+    var optionEleme = [0, 0, 0];
+    var scoreboard = [0, 0, 0];
+
+    rock.addEventListener("click", function() {
+        optionEleme = [1, 0, 0];
+        computerPlay(scoreboard);
+    });
+    paper.addEventListener("click", function() {
+        optionEleme = [0, 1, 0];
+        computerPlay(scoreboard);
+    })
+    scissors.addEventListener("click", function() {
+        optionEleme = [0, 0, 1];
+        computerPlay(scoreboard);
+    })
+
+    function computerPlay(scoreboard) {
+
+        var playerSelection = null;
+
+        if (optionEleme[0] == 1) {
+            playerSelection = 'rock';
+        } else if (optionEleme[1] == 1) {
+            playerSelection = 'paper';
+        } else if (optionEleme[2] == 1) {
+            playerSelection = 'scissors';
+        }
+
+        var options = ['rock', 'paper', 'scissors'];
+        var computerSelection = _.sample(options).toLowerCase();
+
+        if (playerSelection == computerSelection) {} else if (playerSelection == 'rock' & computerSelection == 'paper') {
+            scoreboard[2] += 1;
+        } else if (playerSelection == 'scissors' & computerSelection == 'rock') {
+            scoreboard[2] += 1;
+
+        } else if (playerSelection == 'paper' & computerSelection == 'scissors') {
+            scoreboard[2] += 1;
+
+
+        } else if (playerSelection == 'paper' & computerSelection == 'rock') {
+            scoreboard[1] += 1;
+
+        } else if (playerSelection == 'rock' & computerSelection == 'scissors') {
+            scoreboard[1] += 1;
+
+        } else if (playerSelection == 'scissors' & computerSelection == 'paper') {
+            scoreboard[1] += 1;
+
+        } else {
+            return 0;
+        }
+
+        // display values of player
+        playerScore.innerHTML = scoreboard[1];
+        // display values of computer
+        computerScore.innerHTML = scoreboard[2];
+
+        // when score >= 5 -> display Winner
+        if ((scoreboard[1] + scoreboard[2]) >= 5) {
+            var maximum = _.max(scoreboard);
+            var winner = scoreboard.indexOf(maximum) == 1 ? "Player" : "Computer";
+            winnerStatus.innerHTML = "Winner: " + winner;
+        }
+    }
+
+    if ((scoreboard[1] + scoreboard[2]) >= 5) {
+        //reset values
+        playerScore.innerHTML = 0;
+        computerScore.innerHTML = 0;
+        winnerStatus.innerHTML = "";
+    }
+</script>
 
 </html>
